@@ -1,0 +1,8 @@
+# SPDX-License-Identifier: CC0-1.0
+# SPDX-FileCopyrightText: 2026 Harald Sitter <sitter@kde.org>
+[Desktop Entry]
+Name=OpenQA Needler
+Exec=openqa-needler %F
+Icon=org.kde.openqa.needler
+Type=Application
+Categories=Qt;KDE;Development;
