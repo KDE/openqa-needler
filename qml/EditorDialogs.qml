@@ -5,6 +5,7 @@ pragma ComponentBehavior: Bound
 
 import QtQuick
 import QtQuick.Controls
+import QtQuick.Layouts
 
 import org.kde.kirigami as Kirigami
 import org.kde.ki18n
@@ -20,8 +21,12 @@ Item {
     // Ask the editor page to save (after the master tag was added).
     signal saveRequested()
 
-    function showError(message) {
-        errorDialog.text = message
+    function showError(title, message, details, canRetrySave) {
+        errorDialog.title = title
+        errorDialog.message = message
+        errorDialog.details = details
+        errorDialog.canRetrySave = canRetrySave
+
         errorDialog.open()
     }
 
@@ -29,41 +34,71 @@ Item {
         missingMasterTagDialog.open()
     }
 
-    Dialog {
+    Kirigami.PromptDialog {
         id: missingMasterTagDialog
-        title: KI18n.i18nc("@title:dialog", "Missing master tag")
-        modal: true
-        anchors.centerIn: parent
-        standardButtons: Dialog.Yes | Dialog.No
-        width: Math.min(dialogs.parent.width - 2 * Kirigami.Units.largeSpacing, Kirigami.Units.gridUnit * 28)
+        title: KI18n.i18nc("@title:window", "Add Required Tag")
+        subtitle: KI18n.i18nc("@info", "The needle needs the tag “%1” before it can be saved. Add the tag and save, or cancel to continue editing.", dialogs.document.baseName)
+        standardButtons: Kirigami.Dialog.Cancel
 
-        contentItem: Label {
-            text: KI18n.i18nc("@info:dialog", "All needles must be tagged with their base name, but this needle is missing the tag \"%1\". Should it be added automatically?", dialogs.document.baseName)
-            wrapMode: Text.WordWrap
-        }
-
-        onAccepted: {
-            const tags = Array.from(dialogs.document.tags)
-            tags.push(dialogs.document.baseName)
-            dialogs.document.tags = tags
-            dialogs.saveRequested()
-        }
+        customFooterActions: [
+            Kirigami.Action {
+                text: KI18n.i18nc("@action:button", "Add Tag and Save")
+                icon.name: "document-save"
+                onTriggered: {
+                    missingMasterTagDialog.close()
+                    dialogs.document.addTag(dialogs.document.baseName)
+                    dialogs.saveRequested()
+                }
+            }
+        ]
     }
 
-    Dialog {
+    Kirigami.Dialog {
         id: errorDialog
-        property string text
-        title: KI18n.i18nc("@title:dialog", "Error")
-        modal: true
-        anchors.centerIn: parent
-        standardButtons: Dialog.Ok
-        // width: Math.min(dialogs.parent.width - 2 * Kirigami.Units.largeSpacing, Kirigami.Units.gridUnit * 28)
 
-        // SelectableLabel so the error text can be selected and copied,
-        // e.g. to paste it into a bug report.
-        contentItem: Kirigami.SelectableLabel {
-            text: errorDialog.text
-            wrapMode: Text.WordWrap
+        property string message
+        property string details
+        property bool canRetrySave: false
+
+        preferredWidth: Kirigami.Units.gridUnit * 28
+        maximumWidth: preferredWidth
+        padding: Kirigami.Units.largeSpacing
+
+        standardButtons: Kirigami.Dialog.Close
+
+        customFooterActions: [
+            Kirigami.Action {
+                text: KI18n.i18nc("@action:button", "Retry Save")
+                icon.name: "document-save"
+                visible: errorDialog.canRetrySave
+
+                onTriggered: {
+                    errorDialog.close()
+                    dialogs.saveRequested()
+                }
+            }
+        ]
+
+        ColumnLayout {
+            spacing: Kirigami.Units.largeSpacing
+
+            Label {
+                Layout.fillWidth: true
+
+                text: errorDialog.message
+                textFormat: Text.PlainText
+                wrapMode: Text.Wrap
+            }
+
+            // Keep diagnostics selectable for copying.
+            Kirigami.SelectableLabel {
+                Layout.fillWidth: true
+                visible: errorDialog.details.length > 0
+
+                text: errorDialog.details
+                textFormat: Text.PlainText
+                wrapMode: Text.WrapAnywhere
+            }
         }
     }
 }

@@ -6,6 +6,7 @@
 #include <QObject>
 #include <QString>
 #include <QStringList>
+#include <QStringListModel>
 #include <QUrl>
 #include <qqmlregistration.h>
 
@@ -23,11 +24,19 @@ class NeedleDocument : public QObject
     Q_PROPERTY(QUrl fileUrl MEMBER m_fileUrl NOTIFY fileUrlChanged)
     Q_PROPERTY(QString baseName MEMBER m_baseName NOTIFY baseNameChanged)
     Q_PROPERTY(QUrl pngUrl MEMBER m_pngUrl NOTIFY pngUrlChanged)
-    Q_PROPERTY(QStringList tags MEMBER m_tags NOTIFY tagsChanged)
+    Q_PROPERTY(QStringList tags READ tags WRITE setTags NOTIFY tagsChanged)
+    Q_PROPERTY(QStringListModel *tagsModel READ tagsModel CONSTANT)
     Q_PROPERTY(QStringList needleProperties MEMBER m_needleProperties NOTIFY needlePropertiesChanged)
 
 public:
     explicit NeedleDocument(QObject *parent = nullptr);
+
+    [[nodiscard]] QStringList tags() const;
+    void setTags(const QStringList &tags);
+    [[nodiscard]] QStringListModel *tagsModel();
+
+    Q_INVOKABLE void addTag(const QString &tag);
+    Q_INVOKABLE void removeTagAt(int index);
 
     /*! Load the needle identified by \a url (either its .json or .png file).
      *
@@ -47,7 +56,7 @@ public:
 Q_SIGNALS:
     void loaded();
     void saved();
-    void errorOccurred(const QString &message);
+    void errorOccurred(const QString &title, const QString &message, const QString &details, bool canRetrySave);
     void missingMasterTag();
     void fileUrlChanged();
     void baseNameChanged();
@@ -61,6 +70,6 @@ private:
     QUrl m_fileUrl;
     QString m_baseName;
     QUrl m_pngUrl;
-    QStringList m_tags;
+    QStringListModel m_tagsModel;
     QStringList m_needleProperties;
 };

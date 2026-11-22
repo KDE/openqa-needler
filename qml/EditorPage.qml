@@ -5,6 +5,7 @@ pragma ComponentBehavior: Bound
 
 import QtQuick
 import QtQuick.Layouts
+import QtQuick.Controls
 import QtQml.Models
 
 import org.kde.kirigami as Kirigami
@@ -26,7 +27,7 @@ Kirigami.Page {
     // The needle document. Exposed so the window can bind its title to the
     // loaded needle.
     readonly property NeedleDocument document: NeedleDocument {
-        onErrorOccurred: (message) => dialogs.showError(message)
+        onErrorOccurred: (title, message, details, canRetrySave) => dialogs.showError(title, message, details, canRetrySave)
         onMissingMasterTag: dialogs.showMissingMasterTag()
     }
 
@@ -35,6 +36,23 @@ Kirigami.Page {
 
     // The currently selected area, whose properties are shown in the sidebar.
     property var selectedArea: null
+
+    actions: [
+        Kirigami.Action {
+            text: KI18n.i18nc("@action:intoolbar", "Add Area")
+            icon.name: "list-add"
+            displayHint: Kirigami.DisplayHint.KeepVisible
+            enabled: imageView.imageItem.width > 0 && imageView.imageItem.height > 0
+            onTriggered: imageView.addArea()
+        }
+    ]
+
+    // Keep Save local to the active editor with a Shortcut object.
+    Shortcut {
+        sequences: [StandardKey.Save]
+        enabled: root.isCurrentPage && root.document.baseName.length > 0
+        onActivated: root.save()
+    }
 
     /**
      * @returns {var} the area item at the given index in the model
@@ -133,9 +151,9 @@ Kirigami.Page {
 
     RowLayout {
         anchors.fill: parent
+        spacing: 0
 
         EditorSidebar {
-            Layout.margins: Kirigami.Units.smallSpacing
             // Fixed-width sidebar; maximumWidth keeps the layout from ever
             // growing it beyond the intended panel size.
             Layout.preferredWidth: Kirigami.Units.gridUnit * 16
@@ -145,18 +163,35 @@ Kirigami.Page {
             onSaveRequested: root.save()
         }
 
-        ImageView {
-            id: imageView
+        Kirigami.Separator {
+            Layout.preferredWidth: 1
+            Layout.fillHeight: true
+        }
 
+        ScrollView {
+            id: imageScrollView
             Layout.fillWidth: true
             Layout.fillHeight: true
-            // Never let the image view be squeezed out by the sidebar.
-            Layout.minimumWidth: Kirigami.Units.gridUnit * 10
+            padding: 0
+            clip: true
 
-            document: root.document
-            selectorModel: areasModel
-            editorPage: root
-            onSaveRequested: root.save()
+            rightPadding: effectiveScrollBarWidth
+            bottomPadding: effectiveScrollBarHeight
+
+            background: Rectangle {
+                Kirigami.Theme.colorSet: Kirigami.Theme.View
+                Kirigami.Theme.inherit: false
+                color: Kirigami.Theme.backgroundColor
+            }
+
+            ImageView {
+                id: imageView
+
+                document: root.document
+                selectorModel: areasModel
+                editorPage: root
+                onSaveRequested: root.save()
+            }
         }
     }
 }

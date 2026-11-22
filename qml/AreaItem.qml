@@ -310,12 +310,12 @@ Rectangle {
         id: contextMenu
 
         MenuItem {
-            text: KI18n.i18nc("@action:menu", "Mark as click target")
+            text: KI18n.i18nc("@action:inmenu", "Mark as click target")
             icon.name: "input-mouse"
             onTriggered: rect.selectorModel.setClickArea(rect)
         }
         MenuItem {
-            text: KI18n.i18nc("@action:menu", "Delete")
+            text: KI18n.i18nc("@action:inmenu", "Delete")
             icon.name: "edit-delete"
             onTriggered: rect.selectorModel.removeObject(rect)
         }

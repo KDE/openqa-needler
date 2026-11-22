@@ -31,15 +31,24 @@ Flickable {
     // Ask the editor page to save.
     signal saveRequested()
 
-    contentWidth: imageItem.width * imageItem.scale
-    contentHeight: imageItem.height * imageItem.scale
-
-    ScrollBar.horizontal: ScrollBar {}
-    ScrollBar.vertical: ScrollBar {}
+    contentWidth: Math.max(width, imageItem.width * zoom)
+    contentHeight: Math.max(height, imageItem.height * zoom)
 
     function showImage(url) {
         image.source = ""
         image.source = url
+    }
+
+    // With no position, center the new area in the visible image viewport.
+    function addArea(x, y) {
+        const item = flick.editorPage.createArea()
+        const center = imageItem.mapFromItem(flick, flick.width / 2, flick.height / 2)
+        item.x = Math.max(0, Math.min(Math.round(x === undefined ? center.x - item.width / 2 : x),
+                                     imageItem.width - item.width))
+        item.y = Math.max(0, Math.min(Math.round(y === undefined ? center.y - item.height / 2 : y),
+                                     imageItem.height - item.height))
+        flick.selectorModel.append(item)
+        flick.editorPage.selectedArea = item
     }
 
     Item {
@@ -48,6 +57,11 @@ Flickable {
         width: image.sourceSize.width
         height: image.sourceSize.height
         scale: flick.zoom
+
+        transformOrigin: Item.TopLeft
+
+        x: Math.max(0, (flick.width - width * flick.zoom) / 2)
+        y: Math.max(0, (flick.height - height * flick.zoom) / 2)
 
         Image {
             id: image
@@ -124,17 +138,12 @@ Flickable {
             id: imageContextMenu
 
             MenuItem {
-                text: KI18n.i18nc("@action:menu", "Add area")
+                text: KI18n.i18nc("@action:inmenu", "Add area")
                 icon.name: "list-add"
-                onTriggered: {
-                    const item = flick.editorPage.createArea()
-                    item.x = Math.min(Math.round(imageMouseArea.lastX), Math.max(0, imageItem.width - item.width))
-                    item.y = Math.min(Math.round(imageMouseArea.lastY), Math.max(0, imageItem.height - item.height))
-                    flick.selectorModel.append(item)
-                }
+                onTriggered: flick.addArea(imageMouseArea.lastX, imageMouseArea.lastY)
             }
             MenuItem {
-                text: KI18n.i18nc("@action:button", "Save")
+                text: KI18n.i18nc("@action:inmenu", "Save")
                 icon.name: "document-save"
                 onTriggered: flick.saveRequested()
             }

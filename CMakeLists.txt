@@ -19,7 +19,7 @@ include(FeatureSummary)
 include(ECMQmlModule)
 
 find_package(Qt6 REQUIRED COMPONENTS Core Gui Quick QuickControls2 Widgets Qml QmlIntegration)
-find_package(KF6 REQUIRED COMPONENTS Kirigami I18n KirigamiAddons Config)
+find_package(KF6 REQUIRED COMPONENTS Kirigami I18n KirigamiAddons Config CoreAddons)
 
 add_executable(openqa-needler
     src/main.cpp
@@ -59,11 +59,14 @@ target_link_libraries(openqa-needler PRIVATE
     KF6::I18nQml
     KF6::Kirigami
     KF6::ConfigCore
+    KF6::CoreAddons
     KirigamiApp
 )
 
 install(TARGETS openqa-needler ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
 install(FILES org.kde.needler.desktop DESTINATION ${KDE_INSTALL_APPDIR})
+
+ki18n_install(po)
 
 kde_configure_git_pre_commit_hook(CHECKS CLANG_FORMAT)
 

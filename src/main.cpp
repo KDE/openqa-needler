@@ -3,8 +3,13 @@
 
 #include <QApplication>
 #include <QQmlApplicationEngine>
+#include <QUrl>
+#include <QtQml>
 
+#include <KAboutData>
+#include <KLocalizedContext>
 #include <KLocalizedQmlContext>
+#include <KLocalizedString>
 #include <KirigamiAppDefaults>
 
 using namespace Qt::StringLiterals;
@@ -13,7 +18,22 @@ int main(int argc, char **argv)
 {
     QApplication app(argc, argv);
 
+    KLocalizedString::setApplicationDomain("openqa-needler");
+
     KirigamiAppDefaults::apply(&app);
+
+    KAboutData aboutData(QStringLiteral("openqa-needler"),
+                         i18nc("@title", "openQA Needler"),
+                         QStringLiteral("1.0"),
+                         i18nc("@info application description", "Edit openQA needles"),
+                         KAboutLicense::GPL,
+                         i18nc("@info:credit copyright notice", "(c) 2026"));
+
+    KAboutData::setApplicationData(aboutData);
+
+    qmlRegisterSingletonType("org.kde.needler.about", 1, 0, "About", [](QQmlEngine *engine, QJSEngine *) -> QJSValue {
+        return engine->toScriptValue(KAboutData::applicationData());
+    });
 
     QQmlApplicationEngine engine;
     std::ignore = KLocalization::setupLocalizedContext(&engine);
