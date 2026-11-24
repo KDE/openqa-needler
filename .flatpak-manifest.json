@@ -1,0 +1,29 @@
+{
+    "id": "org.kde.needler",
+    "branch": "master",
+    "runtime": "org.kde.Platform",
+    "runtime-version": "6.11",
+    "sdk": "org.kde.Sdk",
+    "command": "openqa-needler",
+    "desktop-file-name-suffix": " (Nightly)",
+    "tags": ["nightly"],
+    "finish-args": [
+        "--share=ipc",
+        "--socket=fallback-x11",
+        "--socket=wayland",
+        "--device=dri",
+        "--filesystem=home"
+    ],
+    "modules": [
+        {
+            "name": "openqa-needler",
+            "buildsystem": "cmake-ninja",
+            "sources": [
+                {
+                    "type": "dir",
+                    "path": "."
+                }
+            ]
+        }
+    ]
+}

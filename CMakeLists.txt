@@ -65,6 +65,8 @@ target_link_libraries(openqa-needler PRIVATE
 
 install(TARGETS openqa-needler ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
 install(FILES org.kde.needler.desktop DESTINATION ${KDE_INSTALL_APPDIR})
+install(FILES org.kde.needler.metainfo.xml DESTINATION ${KDE_INSTALL_METAINFODIR})
+install(FILES icons/org.kde.needler.svg DESTINATION ${KDE_INSTALL_ICONDIR}/hicolor/scalable/apps)
 
 ki18n_install(po)
 

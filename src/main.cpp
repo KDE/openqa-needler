@@ -29,6 +29,7 @@ int main(int argc, char **argv)
                          KAboutLicense::GPL,
                          i18nc("@info:credit copyright notice", "(c) 2026"));
 
+    aboutData.setDesktopFileName(QStringLiteral("org.kde.needler"));
     KAboutData::setApplicationData(aboutData);
 
     qmlRegisterSingletonType("org.kde.needler.about", 1, 0, "About", [](QQmlEngine *engine, QJSEngine *) -> QJSValue {

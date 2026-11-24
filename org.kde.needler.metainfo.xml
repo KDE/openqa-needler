@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+    <id>org.kde.needler</id>
+    <metadata_license>CC0-1.0</metadata_license>
+    <project_license>GPL-2.0-only OR GPL-3.0-only</project_license>
+    <name>openQA Needler</name>
+    <summary>Create and edit openQA needles</summary>
+    <description>
+        <p>openQA Needler edits the screenshot needle references used by openQA tests. Browse a directory of needles, mark match and exclude areas on an image, and save the needle's PNG and JSON files.</p>
+    </description>
+    <launchable type="desktop-id">org.kde.needler.desktop</launchable>
+    <url type="homepage">https://invent.kde.org/sitter/openqa-needler</url>
+    <url type="vcs-browser">https://invent.kde.org/sitter/openqa-needler</url>
+    <content_rating type="oars-1.1"/>
+</component>
