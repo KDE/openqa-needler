@@ -9,7 +9,7 @@
         <p>openQA Needler edits the screenshot needle references used by openQA tests. Browse a directory of needles, mark match and exclude areas on an image, and save the needle's PNG and JSON files.</p>
     </description>
     <launchable type="desktop-id">org.kde.openqa.needler.desktop</launchable>
-    <url type="homepage">https://invent.kde.org/sitter/openqa-needler</url>
-    <url type="vcs-browser">https://invent.kde.org/sitter/openqa-needler</url>
+    <url type="homepage">https://invent.kde.org/sdk/openqa-needler</url>
+    <url type="vcs-browser">https://invent.kde.org/sdk/openqa-needler</url>
     <content_rating type="oars-1.1"/>
 </component>
