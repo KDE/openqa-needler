@@ -29,7 +29,7 @@ namespace
 
 inline KSharedConfig::Ptr openConfig()
 {
-    return KSharedConfig::openConfig(u"org.kde.needler.conf"_s);
+    return KSharedConfig::openConfig(u"org.kde.openqa.needler.conf"_s);
 }
 
 QUrl loadPersistedDir()

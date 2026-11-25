@@ -11,7 +11,7 @@ import QtQuick.Layouts
 import org.kde.kirigami as Kirigami
 import org.kde.ki18n
 
-import org.kde.needler
+import org.kde.openqa.needler
 
 // The dumb file browser shown when the app was started without a needle
 // argument: lists the needles in the persistent needle directory.

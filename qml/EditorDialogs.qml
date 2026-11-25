@@ -10,7 +10,7 @@ import QtQuick.Layouts
 import org.kde.kirigami as Kirigami
 import org.kde.ki18n
 
-import org.kde.needler
+import org.kde.openqa.needler
 
 // The editor page's dialogs (error report, missing master tag).
 Item {

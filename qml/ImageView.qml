@@ -9,7 +9,7 @@ import QtQuick.Controls
 import org.kde.kirigami as Kirigami
 import org.kde.ki18n
 
-import org.kde.needler
+import org.kde.openqa.needler
 
 // The screenshot view of the editor: image, drag&drop of a new PNG, zoom,
 // the area rectangles and the image context menu.

@@ -29,16 +29,16 @@ int main(int argc, char **argv)
                          KAboutLicense::GPL,
                          i18nc("@info:credit copyright notice", "(c) 2026"));
 
-    aboutData.setDesktopFileName(QStringLiteral("org.kde.needler"));
+    aboutData.setDesktopFileName(QStringLiteral("org.kde.openqa.needler"));
     KAboutData::setApplicationData(aboutData);
 
-    qmlRegisterSingletonType("org.kde.needler.about", 1, 0, "About", [](QQmlEngine *engine, QJSEngine *) -> QJSValue {
+    qmlRegisterSingletonType("org.kde.openqa.needler.about", 1, 0, "About", [](QQmlEngine *engine, QJSEngine *) -> QJSValue {
         return engine->toScriptValue(KAboutData::applicationData());
     });
 
     QQmlApplicationEngine engine;
     std::ignore = KLocalization::setupLocalizedContext(&engine);
-    engine.loadFromModule(u"org.kde.needler", u"Main");
+    engine.loadFromModule(u"org.kde.openqa.needler", u"Main");
 
     return app.exec();
 }

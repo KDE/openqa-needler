@@ -11,8 +11,8 @@ import org.kde.ki18n
 
 import org.kde.kirigamiaddons.formcard as FormCard
 
-import org.kde.needler
-import org.kde.needler.about
+import org.kde.openqa.needler
+import org.kde.openqa.needler.about
 
 Kirigami.ApplicationWindow {
     id: root

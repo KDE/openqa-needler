@@ -11,7 +11,7 @@ import QtQml.Models
 import org.kde.kirigami as Kirigami
 import org.kde.ki18n
 
-import org.kde.needler
+import org.kde.openqa.needler
 
 // The main editor page: sidebar on the left, screenshot with areas on the
 // right. The parts live in EditorSidebar.qml, ImageView.qml and

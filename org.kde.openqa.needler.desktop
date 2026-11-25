@@ -3,6 +3,6 @@
 [Desktop Entry]
 Name=openQA Needler
 Exec=openqa-needler %F
-Icon=org.kde.needler
+Icon=org.kde.openqa.needler
 Type=Application
 Categories=Qt;KDE;Development;

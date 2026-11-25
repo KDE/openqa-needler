@@ -7,11 +7,11 @@ A utility to create and edit needles for openQA test suites.
 Install the nightly build with Flatpak:
 
 ```sh
-flatpak install --user https://cdn.kde.org/flatpak/openqa-needler-nightly/org.kde.needler.flatpakref
-flatpak run org.kde.needler
+flatpak install --user https://cdn.kde.org/flatpak/openqa-needler-nightly/org.kde.openqa.needler.flatpakref
+flatpak run org.kde.openqa.needler
 ```
 
-The Flatpak can read and write needle directories in your home folder. For a checkout outside your home folder, grant access to that directory with `flatpak override --user --filesystem=/absolute/path/to/needles org.kde.needler`.
+The Flatpak can read and write needle directories in your home folder. For a checkout outside your home folder, grant access to that directory with `flatpak override --user --filesystem=/absolute/path/to/needles org.kde.openqa.needler`.
 
 ## Build and Installation Instructions
 

@@ -32,7 +32,7 @@ add_executable(openqa-needler
 )
 
 qt_add_qml_module(openqa-needler
-    URI org.kde.needler
+    URI org.kde.openqa.needler
     RESOURCE_PREFIX /qt/qml
     QML_FILES
         qml/Main.qml
@@ -64,9 +64,9 @@ target_link_libraries(openqa-needler PRIVATE
 )
 
 install(TARGETS openqa-needler ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
-install(FILES org.kde.needler.desktop DESTINATION ${KDE_INSTALL_APPDIR})
-install(FILES org.kde.needler.metainfo.xml DESTINATION ${KDE_INSTALL_METAINFODIR})
-install(FILES icons/org.kde.needler.svg DESTINATION ${KDE_INSTALL_ICONDIR}/hicolor/scalable/apps)
+install(FILES org.kde.openqa.needler.desktop DESTINATION ${KDE_INSTALL_APPDIR})
+install(FILES org.kde.openqa.needler.metainfo.xml DESTINATION ${KDE_INSTALL_METAINFODIR})
+install(FILES icons/org.kde.openqa.needler.svg DESTINATION ${KDE_INSTALL_ICONDIR}/hicolor/scalable/apps)
 
 ki18n_install(po)
 

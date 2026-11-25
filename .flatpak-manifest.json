@@ -1,5 +1,5 @@
 {
-    "id": "org.kde.needler",
+    "id": "org.kde.openqa.needler",
     "branch": "master",
     "runtime": "org.kde.Platform",
     "runtime-version": "6.11",
